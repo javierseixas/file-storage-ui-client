@@ -6,10 +6,14 @@ import FlashMessage from "./FlashMessage";
 
 class App extends Component {
 
-    state = {
-        messageFlashed: false,
-        message: "",
-    };
+    constructor(props) {
+        super();
+
+        this.state = {
+            messageFlashed: false,
+            message: "",
+        };
+    }
 
     messageGetter = (message) => {
         console.log("App component --> " + message);

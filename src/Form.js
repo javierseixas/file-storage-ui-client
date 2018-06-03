@@ -27,7 +27,11 @@ export default class Form extends React.Component {
             .then(res => {
                 console.log(res);
                 if (res.ok) {
-                    console.log("Perfect!")
+                    this.setState({
+                        name: '',
+                        description: '',
+                        file: '',
+                    });
                     responseMessage = "Perfect!";
                     return responseMessage;
                 } else if (res.status === 400) {
@@ -41,12 +45,21 @@ export default class Form extends React.Component {
                 }
             })
             .then(response => {
-                this.setState({responseMessage: response});
+                this.setState({
+                    responseMessage: response,
+                });
+
+                this.props.messageGetter(this.state.responseMessage)
                 console.log("what is here " + response);
             })
             .catch(error => {
                 console.log("Error submitting form!!" + error);
                 responseMessage = "Form error!!!";
+                this.setState({
+                    responseMessage: responseMessage
+                });
+
+                this.props.messageGetter(this.state.responseMessage)
                 return responseMessage;
             });
     }
@@ -62,20 +75,6 @@ export default class Form extends React.Component {
         data.append("description", this.state.description);
 
         this.post(data);
-
-        this.setState({
-            name: '',
-            description: '',
-            file: '',
-        });
-
-        setTimeout(() => {
-          this.setState({
-            alert: false
-          });
-        }, 2000);
-
-        this.props.messageGetter(this.state.responseMessage)
     };
 
     render() {
