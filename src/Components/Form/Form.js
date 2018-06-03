@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { FileUpload } from '@material-ui/icons';
 
 import 'whatwg-fetch'
 
@@ -13,7 +14,23 @@ const styles = theme => ({
   input: {
     display: 'none',
   },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  menu: {
+    width: 200,
+  },
 });
+
 
 
 class Form extends React.Component {
@@ -108,16 +125,20 @@ class Form extends React.Component {
                 <Grid item sm={8}>
                     <form noValidate autoComplete="off" encType="multipart/form-data" method="POST">
                         <TextField
+                            required
                             label="Name"
                             name="name"
+                            className={classes.textField}
                             value={this.state.form.name}
                             onChange={e => this.handleChange(e)}
                             margin="normal"
                         />
                         <br />
                         <TextField
+                            required
                             label="Description"
                             name="description"
+                            className={classes.textField}
                             multiline
                             rows={3}
                             value={this.state.form.description}
@@ -133,17 +154,15 @@ class Form extends React.Component {
                             type="file"
                           />
                           <label htmlFor="flat-button-file">
-                            <Button component="span" className={classes.button}>
+                            <Button component="span" variant="outlined" className={classes.button}>
                               Select file
                             </Button>
                           </label>
                         <br/>
-                        <Button color="primary" className={classes.button}>
-                            Primary
-                        </Button>
-                        <p>
-                            <button onClick={(e) => this.submit(e)}>Upload</button>
-                        </p>
+                        <Button variant="contained" onClick={(e) => this.submit(e)} color="primary" className={classes.button}>
+                            Upload
+                            <FileUpload className={classes.rightIcon} />
+                          </Button>
                     </form>
                 </Grid>
             </Grid>
