@@ -1,4 +1,5 @@
 import React from 'react';
+import 'whatwg-fetch'
 
 export default class Form extends React.Component {
 
@@ -17,7 +18,31 @@ export default class Form extends React.Component {
     submit = (e) => {
         e.preventDefault();
         console.log(this.state);
-    }
+
+        var data = new FormData();
+        var imagedata = document.querySelector('input[type="file"]').files[0];
+        data.append("file", imagedata);
+        data.append("name", this.state.name);
+        data.append("description", this.state.description);
+
+        fetch("http://localhost:8080/files", {
+          mode: 'no-cors',
+          method: "POST",
+          body: data
+        }).then(function (res) {
+          if (res.ok) {
+            alert("Perfect! ");
+              console.log("Perfect!")
+          } else if (res.status === 400) {
+              console.log("Ooops!");
+            alert("Oops! ");
+          } else {
+              console.log("Whatever! " + res.status);
+          }
+        }, function (e) {
+          alert("Error submitting form!");
+        });
+    };
 
     render() {
         return(
@@ -32,7 +57,7 @@ export default class Form extends React.Component {
                 </p>
                 <p>
                     <label>File</label>
-                    <input name="file" type="file" placeholder='Select file' value="" onChange={e => this.change(e)} />
+                    <input name="file" type="file" placeholder='Select file' value={this.state.file} onChange={e => this.change(e)} />
                 </p>
                 <p><button onClick={(e) => this.submit(e)}>Upload</button></p>
 
