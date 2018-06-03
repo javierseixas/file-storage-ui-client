@@ -7,6 +7,7 @@ export default class Form extends React.Component {
         name: '',
         description: '',
         file: '',
+        responseMessage: '',
     }
 
     change = (e) => {
@@ -15,9 +16,16 @@ export default class Form extends React.Component {
         });
     }
 
+    something = (some) => {
+        console.log("I do have state "+ this.state)
+    }
+
+
     submit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        console.log(this);
+
+        let responseMessage = "";
 
         var data = new FormData();
         var imagedata = document.querySelector('input[type="file"]').files[0];
@@ -25,23 +33,41 @@ export default class Form extends React.Component {
         data.append("name", this.state.name);
         data.append("description", this.state.description);
 
-        fetch("http://localhost:8080/files", {
+        let result = fetch("http://localhost:8080/files", {
           mode: 'no-cors',
           method: "POST",
           body: data
-        }).then(function (res) {
+        });
+
+        result.then(res => {
           if (res.ok) {
             alert("Perfect! ");
               console.log("Perfect!")
+              responseMessage = "Perfect!";
+              return responseMessage;
           } else if (res.status === 400) {
               console.log("Ooops!");
+                responseMessage = "400!!!";
+
             alert("Oops! ");
+              return responseMessage;
           } else {
               console.log("Whatever! " + res.status);
+              responseMessage = "Whatever!!!";
+              return responseMessage;
           }
-        }, function (e) {
-          alert("Error submitting form!");
+        })
+            .then(response => {
+                this.setState({responseMessage: response});
+                console.log("what is here " + response);
+            })
+            .catch(error => {
+                console.log("Error submitting form!!" + e);
+                responseMessage = "Form error!!!";
+              return responseMessage;
         });
+
+        this.props.messageGetter(this.state.responseMessage)
     };
 
     render() {
