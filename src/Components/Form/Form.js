@@ -1,22 +1,39 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 import 'whatwg-fetch'
 
-export default class Form extends React.Component {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+
+class Form extends React.Component {
+
 
     state = {
-        name: '',
-        description: '',
-        file: '',
+        form: {
+            name: '',
+            description: '',
+            file: '',
+        },
         responseMessage: '',
-    }
+    };
 
     handleChange = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
+            form: {
+                ...this.state.form,
+                [e.target.name]: e.target.value
+            }
         });
     };
 
@@ -32,9 +49,11 @@ export default class Form extends React.Component {
                 console.log(res);
                 if (res.ok) {
                     this.setState({
-                        name: '',
-                        description: '',
-                        file: '',
+                        form: {
+                            name: '',
+                            description: '',
+                            file: '',
+                        }
                     });
                     responseMessage = "Perfect!";
                     return responseMessage;
@@ -75,49 +94,53 @@ export default class Form extends React.Component {
         var data = new FormData();
         var imagedata = document.querySelector('input[type="file"]').files[0];
         data.append("file", imagedata);
-        data.append("name", this.state.name);
-        data.append("description", this.state.description);
+        data.append("name", this.state.form.name);
+        data.append("description", this.state.form.description);
 
         this.post(data);
     };
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
+
         return (
             <Grid container>
                 <Grid item sm={8}>
                     <form noValidate autoComplete="off" encType="multipart/form-data" method="POST">
                         <TextField
-                            id="name"
                             label="Name"
                             name="name"
-                            value={this.state.name}
+                            value={this.state.form.name}
                             onChange={e => this.handleChange(e)}
                             margin="normal"
                         />
+                        <br />
                         <TextField
-                            id="description"
                             label="Description"
                             name="description"
                             multiline
-                            rowsMax="4"
-                            value={this.state.description}
+                            rows={3}
+                            value={this.state.form.description}
                             onChange={e => this.handleChange(e)}
                             margin="normal"
                         />
+                        <br />
                         <input
                             accept="image/*"
-                            id="raised-button-file"
+                            className={classes.input}
+                            id="flat-button-file"
+                            multiple
                             type="file"
-                            name="file"
-                            value={this.state.file}
-                            onChange={e => this.handleChange(e)}
-                        />
-                        <label htmlFor="raised-button-file">
-                            <Button variant="raised" component="span">
-                                Search file
+                          />
+                          <label htmlFor="flat-button-file">
+                            <Button component="span" className={classes.button}>
+                              Select file
                             </Button>
-                        </label>
+                          </label>
+                        <br/>
+                        <Button color="primary" className={classes.button}>
+                            Primary
+                        </Button>
                         <p>
                             <button onClick={(e) => this.submit(e)}>Upload</button>
                         </p>
@@ -128,3 +151,5 @@ export default class Form extends React.Component {
         )
     }
 }
+
+export default withStyles(styles)(Form);
