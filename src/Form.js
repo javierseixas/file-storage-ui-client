@@ -23,7 +23,6 @@ export default class Form extends React.Component {
 
     submit = (e) => {
         e.preventDefault();
-        console.log(this);
 
         let responseMessage = "";
 
@@ -34,22 +33,19 @@ export default class Form extends React.Component {
         data.append("description", this.state.description);
 
         let result = fetch("http://localhost:8080/files", {
-          mode: 'no-cors',
           method: "POST",
           body: data
         });
 
         result.then(res => {
+            console.log(res);
           if (res.ok) {
-            alert("Perfect! ");
               console.log("Perfect!")
               responseMessage = "Perfect!";
               return responseMessage;
           } else if (res.status === 400) {
               console.log("Ooops!");
                 responseMessage = "400!!!";
-
-            alert("Oops! ");
               return responseMessage;
           } else {
               console.log("Whatever! " + res.status);
@@ -65,6 +61,12 @@ export default class Form extends React.Component {
                 console.log("Error submitting form!!" + e);
                 responseMessage = "Form error!!!";
               return responseMessage;
+        });
+
+        this.setState({
+            name: '',
+            description: '',
+            file: '',
         });
 
         this.props.messageGetter(this.state.responseMessage)
