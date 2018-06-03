@@ -72,15 +72,13 @@ class Form extends React.Component {
                             file: '',
                         }
                     });
-                    responseMessage = "Perfect!";
+                    responseMessage = "File uploaded Successfully!";
                     return responseMessage;
                 } else if (res.status === 400) {
-                    console.log("Ooops!");
-                    responseMessage = "400!!!";
+                    responseMessage = "There is some field missing";
                     return responseMessage;
                 } else {
-                    console.log("Whatever! " + res.status);
-                    responseMessage = "Whatever!!!";
+                    responseMessage = "Something went wrong... :(";
                     return responseMessage;
                 }
             })
