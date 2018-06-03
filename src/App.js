@@ -30,7 +30,6 @@ class App extends Component {
           { this.state.messageFlashed &&
             <FlashMessage message={this.state.message} />
           }
-          <p>{this.state.message}</p>
         <Form messageGetter={this.messageGetter} />
       </div>
     );
