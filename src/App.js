@@ -34,7 +34,7 @@ class App extends Component {
                 {this.state.messageFlashed &&
                 <FlashMessage message={this.state.message}/>
                 }
-                <Form messageGetter={this.messageGetter}/>
+                <Form messageGetter={this.messageGetter} />
             </div>
         );
     }
