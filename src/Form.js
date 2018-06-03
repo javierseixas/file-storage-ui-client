@@ -14,23 +14,11 @@ export default class Form extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-    }
+    };
 
-    something = (some) => {
-        console.log("I do have state " + this.state)
-    }
-
-
-    submit = (e) => {
-        e.preventDefault();
+    post = (data) => {
 
         let responseMessage = "";
-
-        var data = new FormData();
-        var imagedata = document.querySelector('input[type="file"]').files[0];
-        data.append("file", imagedata);
-        data.append("name", this.state.name);
-        data.append("description", this.state.description);
 
         fetch("http://localhost:8080/files", {
             method: "POST",
@@ -57,16 +45,35 @@ export default class Form extends React.Component {
                 console.log("what is here " + response);
             })
             .catch(error => {
-                console.log("Error submitting form!!" + e);
+                console.log("Error submitting form!!" + error);
                 responseMessage = "Form error!!!";
                 return responseMessage;
             });
+    }
+
+
+    submit = (e) => {
+        e.preventDefault();
+
+        var data = new FormData();
+        var imagedata = document.querySelector('input[type="file"]').files[0];
+        data.append("file", imagedata);
+        data.append("name", this.state.name);
+        data.append("description", this.state.description);
+
+        this.post(data);
 
         this.setState({
             name: '',
             description: '',
             file: '',
         });
+
+        setTimeout(() => {
+          this.setState({
+            alert: false
+          });
+        }, 2000);
 
         this.props.messageGetter(this.state.responseMessage)
     };
