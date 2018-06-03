@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import 'whatwg-fetch'
 
@@ -81,44 +82,49 @@ export default class Form extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
-             <form noValidate autoComplete="off" encType="multipart/form-data" method="POST">
-                 <TextField
-                     id="name"
-                     label="Name"
-                     name="name"
-                     value={this.state.name}
-                     onChange={e => this.handleChange(e)}
-                     margin="normal"
-                 />
-                 <TextField
-                     id="description"
-                     label="Description"
-                     name="description"
-                     multiline
-                     rowsMax="4"
-                     value={this.state.description}
-                     onChange={e => this.handleChange(e)}
-                     margin="normal"
-                 />
-                 <input
-                  accept="image/*"
-                  id="raised-button-file"
-                  type="file"
-                  name="file"
-                   value={this.state.file}
-                   onChange={e => this.handleChange(e)}
-                />
-                <label htmlFor="raised-button-file">
-                  <Button variant="raised" component="span">
-                    Search file
-                  </Button>
-                </label>
-                <p>
-                    <button onClick={(e) => this.submit(e)}>Upload</button>
-                </p>
-             </form>
+            <Grid container>
+                <Grid item sm={8}>
+                    <form noValidate autoComplete="off" encType="multipart/form-data" method="POST">
+                        <TextField
+                            id="name"
+                            label="Name"
+                            name="name"
+                            value={this.state.name}
+                            onChange={e => this.handleChange(e)}
+                            margin="normal"
+                        />
+                        <TextField
+                            id="description"
+                            label="Description"
+                            name="description"
+                            multiline
+                            rowsMax="4"
+                            value={this.state.description}
+                            onChange={e => this.handleChange(e)}
+                            margin="normal"
+                        />
+                        <input
+                            accept="image/*"
+                            id="raised-button-file"
+                            type="file"
+                            name="file"
+                            value={this.state.file}
+                            onChange={e => this.handleChange(e)}
+                        />
+                        <label htmlFor="raised-button-file">
+                            <Button variant="raised" component="span">
+                                Search file
+                            </Button>
+                        </label>
+                        <p>
+                            <button onClick={(e) => this.submit(e)}>Upload</button>
+                        </p>
+                    </form>
+                </Grid>
+            </Grid>
+
         )
     }
 }

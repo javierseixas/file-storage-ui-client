@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import '../App.css';
-import Form from './Form'
+import Form from './Form/Form'
 import FlashMessage from "./FlashMessage";
 import Header from "./Layouts/Header"
 
