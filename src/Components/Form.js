@@ -108,7 +108,7 @@ export default class Form extends React.Component {
                   type="file"
                   name="file"
                    value={this.state.file}
-                   onChange={e => this.change(e)}
+                   onChange={e => this.handleChange(e)}
                 />
                 <label htmlFor="raised-button-file">
                   <Button variant="raised" component="span">
