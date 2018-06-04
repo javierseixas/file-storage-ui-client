@@ -1,10 +1,10 @@
 language: node_js
-node_js: stable
+node_js: lts/*
 sudo: required
-dist: trusty
+dist: precise
 install:
-  - npm cache clean
+  - npm cache verify
   - npm install
 script:
-  - npm run test
+  - npm test
   - npm run build
