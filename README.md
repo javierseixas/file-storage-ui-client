@@ -24,6 +24,15 @@ Make sure you have port `3000` available.
 npm start
 ```
 
+## Solution explanations
+* React has being used as UI framework
+* Material UI has being implemented for design
+* React app created from `create-react-app`
+* CI: Every commit to master will trigger a travis-ci pipeline which will:
+  * build and test the application
+  * create a docker image and push it to Docker Hub
+
+
 ## Tech-debt
 * Create an store.js for App State
 * Improving flash message
