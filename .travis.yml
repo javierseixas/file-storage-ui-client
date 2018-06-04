@@ -8,6 +8,15 @@ install:
 script:
   - npm test
   - npm run build
+services:
+  - docker
+after_succes:
+  - docker build -t javierseixas/file-storage-ui-client:latest .
 cache:
   directories:
     - $HOME/.npm
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master
