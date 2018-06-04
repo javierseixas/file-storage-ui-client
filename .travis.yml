@@ -2,15 +2,16 @@ language: node_js
 node_js: lts/*
 sudo: required
 dist: precise
+services:
+  - docker
 install:
   - npm cache verify
   - npm install
 script:
   - npm test
   - npm run build
-services:
-  - docker
-after_succes:
+  - docker -v
+before_deploy:
   - docker build -t javierseixas/file-storage-ui-client:latest .
 cache:
   directories:
